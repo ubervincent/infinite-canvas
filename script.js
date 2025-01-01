@@ -40,3 +40,20 @@ window.addEventListener("resize", () => {
     
     drawGrid(context, calculateCellSize(), "black");
 });
+
+let currentScale = 100; // Base scale
+const MIN_SCALE = 10;   // Minimum grid size
+const MAX_SCALE = 200;  // Maximum grid size
+
+window.addEventListener("wheel", (event) => {
+    event.preventDefault();
+
+    // Adjust scale more gradually
+    currentScale += event.deltaY * 0.1;
+    currentScale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, currentScale));
+    
+    // Clear and redraw
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid(context, currentScale, "black");
+}, { passive: false });
+
